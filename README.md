@@ -1,9 +1,14 @@
 # FTP
 using VC++ 2017 On Windows10
 
+11/12
+---
+void CloseFtp() // 서버 종료 함수
+
+---
 11/05 
 ---
-int ConnectFtp() // 서버 연결 함수
+void ConnectFtp() // 서버 연결 함수
 
 void FileSubmit(char* Destfilename) // 파일 업로드
 
