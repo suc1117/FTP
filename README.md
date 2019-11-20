@@ -1,6 +1,11 @@
 # FTP
 using VC++ 2017 On Windows10
 
+11/20
+---
+char* GetFilename(char* Destfilename) // 파일 이름 파싱 (확장명 포함)
+
+---
 11/12
 ---
 void CloseFtp() // 서버 종료 함수
