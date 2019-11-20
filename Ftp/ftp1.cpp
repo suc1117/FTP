@@ -1,17 +1,34 @@
 #include <Windows.h>
 #include <wininet.h> 
 #include <iostream>
+#include <string.h>
 #pragma comment(lib, "Wininet")
 
 /// FTP SERVER SETTINGS ///
-const char* SERVER_ADDRESS="SERVER_ADDRESS";
+const char* SERVER_ADDRESS= "SERVER_ADDRESS";
 const char* ID = "ID";
 const char* PW = "PASSWORD";
+char* mfilename;
 
-std::string RemotePath = "./"; // Upload/Download Path
+std::string RemotePath = "./"; // Remote Server Path
 HINTERNET hInternet;
 HINTERNET hFtpSession;
 int SERVER_STATUS=0; // 0= Offline 1=Online
+
+char* GetFilename(std::string DestFile) // parsing filename include extension
+{
+	mfilename = new char[DestFile.length() + 1];
+	char* pch;
+	char* result;
+	strcpy(mfilename, DestFile.c_str());
+	pch = strtok(mfilename, "/");
+	while (pch != NULL)
+	{
+		result = pch;
+		pch = strtok(NULL, "/");
+	}
+	return result;
+}
 
 void ConnectFtp()
 {
@@ -60,17 +77,17 @@ void FileSubmit(char* Destfilename) // Upload File to FTP Server
 {
 	if (SERVER_STATUS)
 	{
-		std::string tDestFile = RemotePath + Destfilename;
-		const char* DestPath = tDestFile.c_str();
-		if (!FtpPutFile(hFtpSession, DestPath, Destfilename, FTP_TRANSFER_TYPE_BINARY, 0))
+		char* filename= GetFilename(Destfilename);
+		if (!FtpPutFile(hFtpSession, Destfilename, filename, FTP_TRANSFER_TYPE_BINARY, 0))
 		{
-			std::cout << "File Upload Error: " << GetLastError() << std::endl;
+			std::cout << "\nFile Upload Error: " << GetLastError() << std::endl;
 		}
-		else 
+		else
 		{
 			std::cout << "File Upload Complete" << std::endl;
 		}
 	}
+	delete[] mfilename;
 }
 
 void FileDown(char* Destfilename) // Download File from FTP Server
@@ -108,9 +125,9 @@ void FileRemove(char* filename) // Remove File
 int main()
 {
 	ConnectFtp(); // Connect to Server
-	//FileSubmit("FTP_1105.zip"); // File Upload
-	//FileDown("FTP_1105.zip"); // File Download
-	//FileRemove("appserver1.cap");
+	//FileSubmit("C:/example/test.jpg"); // File Upload
+	//FileDown("server_file.zip"); // File Download
+	//FileRemove("server_file.zip");
 	CloseFtp();
 	return 0;
 }
