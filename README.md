@@ -64,15 +64,13 @@ void FileRemove(char* filename)
 	* Win+R 로 실행창 띄우고 cmd 입력
 	* ipconfig 입력해서 IP 확인
 	* 웹 브라우저에 **"ftp://본인ip"** 입력해서 접속
-	* 새로 추가한 사용자 id와 pw 입력해서 확인 <br>
-	
-(참고: [사이트](https://m.blog.naver.com/btdays/220593691357))
+	* 새로 추가한 사용자 id와 pw 입력해서 확인
 
 ## 기술 설명
 C++ WinINet을 이용한 FTP 클라이언트 기능 구현
 	
 WinINet enables applications to navigate and manipulate directories and files on an ftp server.                                           
-(출처: [사이트](https://docs.microsoft.com/en-us/windows/win32/wininet/ftp-sessions))
+(출처: https://docs.microsoft.com/en-us/windows/win32/wininet/ftp-sessions)
 
 FTP session을 시작하기 위해 InternetOpen을 통한 WinINet 기능 사용을 위한 초기화. <br>
 InternetConnect을 통한 세션 생성. <br>
@@ -96,15 +94,24 @@ hFtpSession = InternetConnect(hInternet,
 	          INTERNET_SERVICE_FTP, 
 	          0, 0);
 ```
+```c++
+int main() { ConnectFtp(); }
+```
 ###### *SERVER_ADDRESS: FTP 서버 주소 *ID, PW: FTP 서버 아이디, 비밀번호
 
 [파일 업로드]
 ```c++
 FtpPutFile(hFtpSession, DestPath, Destfilename, FTP_TRANSFER_TYPE_BINARY, 0)
 ```
+```c++
+int main() { FileSubmit(./abc.txt); } 
+```
 [파일 다운로드]
 ```c++
 FtpGetFile(hFtpSession, DestPath, Destfilename, FALSE, NULL, FTP_TRANSFER_TYPE_BINARY, NULL)
+```
+```c++
+int main() { FileDown(./abc.txt); } 
 ```
 
 ###### *DestPath: 업로드 할 FTP 디렉토리 경로 *Destfilename: 업로드 할 파일명
@@ -112,6 +119,9 @@ FtpGetFile(hFtpSession, DestPath, Destfilename, FALSE, NULL, FTP_TRANSFER_TYPE_B
 [파일 삭제]
 ```c++
 FtpDeleteFile(hFtpSession, filename)
+```
+```c++
+int main() { FileRemove(./abc.txt); } 
 ```
 ###### *filename: 삭제할 파일명
 
@@ -126,6 +136,20 @@ if (hFtpSession) {
 	hFtpSession = NULL;
 }
 ```
+```c++
+int main() { CloseFtp(); }
+```
+[업로드 예시]
+```c++
+int main() {
+	ConnectFtp();
+	FileSubmit(./abc.txt);
+	CloseFtp();
+}
+```
+
 ## Technologies
 Project is created with:
 * Visual Studio 2017
+
+
