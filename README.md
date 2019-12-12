@@ -22,6 +22,9 @@ void FileRemove(char* filename)
 
 ## FTP 구축하기
 이 프로젝트는 Windows에서 지원하는 IIS(인터넷 정보 서비스) 관리자를 통해 서버를 구축하였습니다. <br>
+IIS는 마이크로소프트 윈도우를 사용하는 서버들을 위한 인터넷 기반 서비스의 모임으로 FTP 뿐만 아니라 ASP.NET, PHP등 <br>
+다양한 포로토콜 서비스도 지원합니다. <br>
+
 * 공유기의 경우 포트포워딩 또는 DMZ/Twin IP를 설정해서 외부 접속이 가능한 상태가 되어야 합니다. 이 부분은 [사이트](https://blog.naver.com/btdays/220589344195)를 참고해주시기 바랍니다.
 
 1. IIS 관리자 설치
@@ -67,6 +70,7 @@ void FileRemove(char* filename)
 	* 새로 추가한 사용자 id와 pw 입력해서 확인
 
 ## 기술 설명
+
 C++ WinINet을 이용한 FTP 클라이언트 기능 구현
 	
 WinINet enables applications to navigate and manipulate directories and files on an ftp server.                                           
